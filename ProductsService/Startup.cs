@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,9 @@ namespace ProductsService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Products Service API", Version = "v1" });
             });
-            
+
+            services.AddAutoMapper(typeof(ProductsContext).Assembly);
+
             services.AddDbContext<ProductsContext>(options => options.UseInMemoryDatabase(databaseName: "Products"));
 
             services.AddTransient<IProductsRepository, EFProductsRepository>();
