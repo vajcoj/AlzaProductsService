@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Notebook",
+    "imgUri": "img/1.png",
+    "price": 50000,
+    "description": "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Mauris tincidunt sem sed arcu. Pellentesque pretium lectus id turpis. "
+  },
+  {
+    "id": 2,
+    "name": "Keyboard",
+    "imgUri": "img/2.png",
+    "price": 2500,
+    "description": "Etiam bibendum elit eget erat. Fusce nibh. Etiam ligula pede, sagittis quis, interdum ultricies, scelerisque eu. In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Aenean fermentum risus id tortor. Fusce aliquam vestibulum ipsum."
+  },
+  {
+    "id": 3,
+    "name": "Mouse",
+    "imgUri": "img/3.png",
+    "price": 700,
+    "description": "Curabitur bibendum justo non orci. Quisque porta. Etiam sapien elit, consequat eget, tristique non, venenatis quis, ante. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
+  },
+  {
+    "id": 4,
+    "name": "USB Hub",
+    "imgUri": "img/4.png",
+    "price": 300,
+    "description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Integer pellentesque quam vel velit. Pellentesque ipsum."
+  }
+]
