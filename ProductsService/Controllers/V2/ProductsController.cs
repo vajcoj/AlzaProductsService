@@ -5,10 +5,10 @@ using ProductsService.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ProductsService.Controllers
+namespace ProductsService.Controllers.V2
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v2/[controller]")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductsRepository _productsRepo;
@@ -20,22 +20,13 @@ namespace ProductsService.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProduct(int id)
-        {
-            var product = await _productsRepo.GetProduct(id);
-            var productToReturn = _mapper.Map<ProductGetDTO>(product);
-            return Ok(productToReturn);
-        }
-
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProductsPaged()
         {
             var products = await _productsRepo.GetAllProducts();
             var productsToReturn = _mapper.Map<IEnumerable<ProductGetDTO>>(products);
             return Ok(productsToReturn);
         }
-
 
     }
 }
