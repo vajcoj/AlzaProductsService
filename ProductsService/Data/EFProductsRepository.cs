@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductsService.Data.Interface;
+using ProductsService.Helpers.Pagination;
 using ProductsService.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductsService.Data
@@ -18,6 +20,15 @@ namespace ProductsService.Data
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
             var products = await _context.Products.ToListAsync();
+            return products;
+        }
+
+        public async Task<PagedList<Product>> GetAllProductsPaged(ProductParmeters productParmeters)
+        {
+            var products = await PagedList<Product>.ToPagedList(_context.Products,
+                    productParmeters.PageNumber,
+                    productParmeters.PageSize);
+
             return products;
         }
 
