@@ -13,9 +13,9 @@ namespace ProductsService.Controllers.V1
     [Route("api/v1/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductsService _productsService;
+        private readonly IProductService _productsService;
 
-        public ProductsController(IProductsService service)
+        public ProductsController(IProductService service)
         {
             _productsService = service;
         }

@@ -1,21 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProductsService.Services.Interface;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using ProductsService.Data;
+using ProductsService.DTOs;
 using ProductsService.Helpers.Pagination;
 using ProductsService.Models;
+using ProductsService.Services.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ProductsService.Data;
-using AutoMapper;
-using ProductsService.DTOs;
 
 namespace ProductsService.Services
 {
-    public class EFProductsService : IProductsService
+    public class ProductService : IProductService
     {
         private readonly ProductsContext _context;
         private readonly IMapper _mapper;
 
-        public EFProductsService(ProductsContext context, IMapper mapper)
+        public ProductService(ProductsContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -28,7 +28,7 @@ namespace ProductsService.Services
             return productsToReturn;
         }
 
-        public async Task<PagedList<ProductGetDTO>> Get(ProductParmeters productParmeters)
+        public async Task<PagedList<ProductGetDTO>> GetPaged(ProductParmeters productParmeters)
         {
             var products = await PagedList<Product>.ToPagedList(_context.Products,
                     productParmeters.PageNumber,
@@ -49,7 +49,7 @@ namespace ProductsService.Services
 
         public async Task<bool> Update(int id, ProductPatchDTO patch)
         {
-            var product = new Product() { Id = id};
+            var product = new Product() { Id = id };
 
             _mapper.Map(patch, product);
             _context.Products.Attach(product);

@@ -52,7 +52,7 @@ namespace ProductsService
 
             services.AddDbContext<ProductsContext>(con => con.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddTransient<IProductsService, EFProductsService>();
+            services.AddTransient<IProductService, ProductService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

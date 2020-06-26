@@ -7,9 +7,9 @@ namespace ProductsService.Helpers
 {
     public static class HttpResponseExtensions
     {
-        public static void AddPagination(this HttpResponse response, int currentPage, int pageSize, int totalCount, int totalPages, bool hasNext, bool hasPrevious)
+        public static void AddPagination<T>(this HttpResponse response, PagedList<T> list)
         {
-            var paginationHeader = new PaginationHeader(currentPage, pageSize, totalCount, totalPages, hasNext, hasPrevious);
+            var paginationHeader = new PaginationHeader(list.CurrentPage, list.PageSize, list.TotalCount, list.TotalPages, list.HasNext, list.HasPrevious);
 
             var camelCaseFormatter = new JsonSerializerSettings();
             camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();

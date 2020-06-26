@@ -2,6 +2,6 @@
 {
 	public class ProductParmeters : QueryStringParameters
 	{
-		
+
 	}
 }

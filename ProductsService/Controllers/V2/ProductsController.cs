@@ -13,9 +13,9 @@ namespace ProductsService.Controllers.V2
     [Route("api/v2/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductsService _productsService;
+        private readonly IProductService _productsService;
 
-        public ProductsController(IProductsService service)
+        public ProductsController(IProductService service)
         {
             _productsService = service;
         }
@@ -24,10 +24,10 @@ namespace ProductsService.Controllers.V2
         [ProducesResponseType(typeof(IEnumerable<ProductGetDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] ProductParmeters productParmeters)
         {
-            var products = await _productsService.Get(productParmeters);          
+            var products = await _productsService.GetPaged(productParmeters);
 
-            Response.AddPagination(products.CurrentPage, products.PageSize, products.TotalCount, products.TotalPages, products.HasNext, products.HasPrevious);
-           
+            Response.AddPagination(products);
+
             return Ok(products);
         }
 

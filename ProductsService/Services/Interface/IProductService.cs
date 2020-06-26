@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace ProductsService.Services.Interface
 {
-    public interface IProductsService
+    public interface IProductService
     {
         public Task<ProductGetDTO> Get(int id);
         public Task<IEnumerable<ProductGetDTO>> Get();
-        public Task<PagedList<ProductGetDTO>> Get(ProductParmeters productParmeters);
+        public Task<PagedList<ProductGetDTO>> GetPaged(ProductParmeters productParmeters);
 
         /// <summary>
         /// Updates product with given id by patch data.

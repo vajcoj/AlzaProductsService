@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using ProductsService.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ProductsService.Data
@@ -11,11 +12,11 @@ namespace ProductsService.Data
         {
             if (!context.Products.Any())
             {
-                var jsonData = System.IO.File.ReadAllText("Data/ProductsSeedData.json");
+                var jsonData = File.ReadAllText("Data/ProductsSeedData.json");
                 var products = JsonConvert.DeserializeObject<List<Product>>(jsonData);
 
                 context.Products.AddRange(products);
-                
+
                 context.SaveChanges();
             }
         }
