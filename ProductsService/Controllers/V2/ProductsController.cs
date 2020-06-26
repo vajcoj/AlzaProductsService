@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ProductsService.Data.Interface;
-using ProductsService.DTOs;
 using ProductsService.Helpers;
 using ProductsService.Helpers.Pagination;
-using System.Collections.Generic;
+using ProductsService.Service.Interface;
 using System.Threading.Tasks;
 
 namespace ProductsService.Controllers.V2
@@ -13,23 +11,23 @@ namespace ProductsService.Controllers.V2
     [Route("api/v2/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductsRepository _productsRepo;
+        private readonly IProductsService _productsService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductsRepository repo, IMapper mapper)
+        public ProductsController(IProductsService service, IMapper mapper)
         {
-            _productsRepo = repo;
+            _productsService = service;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProductsPaged([FromQuery] ProductParmeters productParmeters)
+        public async Task<IActionResult> GetAll([FromQuery] ProductParmeters productParmeters)
         {
-            var products = await _productsRepo.GetAllProductsPaged(productParmeters);          
-            var productsToReturn = _mapper.Map<IEnumerable<ProductGetDTO>>(products);
+            var products = await _productsService.Get(productParmeters);          
 
             Response.AddPagination(products.CurrentPage, products.PageSize, products.TotalCount, products.TotalPages, products.HasNext, products.HasPrevious);
-            return Ok(productsToReturn);
+           
+            return Ok(products);
         }
 
     }

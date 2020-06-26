@@ -10,7 +10,8 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using ProductsService.Conventions;
 using ProductsService.Data;
-using ProductsService.Data.Interface;
+using ProductsService.Service;
+using ProductsService.Service.Interface;
 
 namespace ProductsService
 {
@@ -49,7 +50,7 @@ namespace ProductsService
 
             services.AddDbContext<ProductsContext>(options => options.UseInMemoryDatabase(databaseName: "Products"));
 
-            services.AddTransient<IProductsRepository, EFProductsRepository>();
+            services.AddTransient<IProductsService, EFProductsService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

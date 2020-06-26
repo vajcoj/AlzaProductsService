@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using ProductsService.Data.Interface;
+using ProductsService.Service.Interface;
 using ProductsService.DTOs;
 using System;
 using System.Collections.Generic;
@@ -13,63 +13,52 @@ namespace ProductsService.Controllers.V1
     [Route("api/v1/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductsRepository _productsRepo;
+        private readonly IProductsService _productsService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductsRepository repo, IMapper mapper)
+        public ProductsController(IProductsService service, IMapper mapper)
         {
-            _productsRepo = repo;
+            _productsService = service;
             _mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProduct(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var product = await _productsRepo.GetProduct(id);
-            var productToReturn = _mapper.Map<ProductGetDTO>(product);
-            return Ok(productToReturn);
+            var product = await _productsService.Get(id);
+            return Ok(product);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAll()
         {
-            var products = await _productsRepo.GetAllProducts();
-            var productsToReturn = _mapper.Map<IEnumerable<ProductGetDTO>>(products);
-            return Ok(productsToReturn);
+            var products = await _productsService.Get(); 
+            return Ok(products);
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PartialUpdateProduct(int id, JsonPatchDocument<ProductPatchDTO> patchDoc)
+        public async Task<IActionResult> PartialUpdate(int id, JsonPatchDocument<ProductPatchDTO> patchDoc)
         {
             if (patchDoc == null)
             {
                 return BadRequest(ModelState);
             }
 
-            var productFromRepo = await _productsRepo.GetProduct(id);
+            var patch = new ProductPatchDTO();
 
-            if (productFromRepo == null)
-            {
-                return NotFound();
-            }
+            patchDoc.ApplyTo(patch, ModelState);
 
-            var productToPatch = _mapper.Map<ProductPatchDTO>(productFromRepo);
-
-            patchDoc.ApplyTo(productToPatch, ModelState);
-
-            if (!TryValidateModel(productToPatch))
+            if (!TryValidateModel(patch))
             {
                 return ValidationProblem(ModelState);
             }
 
-            _mapper.Map(productToPatch, productFromRepo);
-
-            if (! await _productsRepo.SaveChanges())
+            if (! await _productsService.Update(id, patch))
             {
-                throw new Exception($"Updating product {id} failed on save");
+                throw new Exception($"Updating product {id} failed.");
             }
 
-            return new ObjectResult(productFromRepo);
+            return NoContent();
         }
 
     }
