@@ -34,11 +34,11 @@ namespace ProductsService
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             })
-             .AddFluentValidation(s =>
-             {
-                 s.RegisterValidatorsFromAssemblyContaining<Startup>();
-                 s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-             });
+            .AddFluentValidation(s =>
+            {
+                s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -48,7 +48,9 @@ namespace ProductsService
 
             services.AddAutoMapper(typeof(ProductsContext).Assembly);
 
-            services.AddDbContext<ProductsContext>(options => options.UseInMemoryDatabase(databaseName: "Products"));
+            //services.AddDbContext<ProductsContext>(options => options.UseInMemoryDatabase(databaseName: "Products"));
+
+            services.AddDbContext<ProductsContext>(con => con.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IProductsService, EFProductsService>();
         }

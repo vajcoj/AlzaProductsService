@@ -17,10 +17,19 @@ namespace ProductsService
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<ProductsContext>();
-                Seed.SeedProducts(context);
+                try
+                {                 
+                    var context = services.GetRequiredService<ProductsContext>();
+                    context.Database.Migrate();
+                    Seed.SeedProducts(context);
+                }
+                catch (Exception e)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "Error occured during migration.");
+                }
+                
             }
-
             host.Run();
         }
 
