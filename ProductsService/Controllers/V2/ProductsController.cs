@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using ProductsService.DTOs;
 using ProductsService.Helpers;
 using ProductsService.Helpers.Pagination;
 using ProductsService.Services.Interface;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProductsService.Controllers.V2
@@ -18,6 +21,7 @@ namespace ProductsService.Controllers.V2
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ProductGetDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] ProductParmeters productParmeters)
         {
             var products = await _productsService.Get(productParmeters);          

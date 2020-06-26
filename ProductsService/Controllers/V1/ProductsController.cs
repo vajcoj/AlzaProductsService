@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ProductsService.DTOs;
 using ProductsService.Services.Interface;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProductsService.Controllers.V1
@@ -19,20 +21,33 @@ namespace ProductsService.Controllers.V1
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ProductGetDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
+            if (id < 1) return BadRequest();
+
             var product = await _productsService.Get(id);
+
+            if (product is null) return NotFound();
+
             return Ok(product);
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ProductGetDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
             var products = await _productsService.Get(); 
+
             return Ok(products);
         }
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PartialUpdate(int id, JsonPatchDocument<ProductPatchDTO> patchDoc)
         {
             if (patchDoc == null)
@@ -51,7 +66,7 @@ namespace ProductsService.Controllers.V1
 
             if (! await _productsService.Update(id, patch))
             {
-                throw new Exception($"Updating product {id} failed.");
+                return NotFound();
             }
 
             return NoContent();
