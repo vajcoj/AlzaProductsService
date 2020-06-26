@@ -24,6 +24,11 @@ namespace ProductsService.Controllers.V2
         [ProducesResponseType(typeof(IEnumerable<ProductGetDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll([FromQuery] ProductParmeters productParmeters)
         {
+            if (productParmeters.PageSize < 1 || productParmeters.PageNumber < 1)
+            {
+                return BadRequest();
+            }
+
             var products = await _productsService.GetPaged(productParmeters);
 
             Response.AddPagination(products);

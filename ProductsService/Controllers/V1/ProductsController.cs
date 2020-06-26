@@ -50,6 +50,8 @@ namespace ProductsService.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PartialUpdate(int id, JsonPatchDocument<ProductPatchDTO> patchDoc)
         {
+            if (id < 1) return BadRequest();
+
             if (patchDoc == null)
             {
                 return BadRequest(ModelState);
