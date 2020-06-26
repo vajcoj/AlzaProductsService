@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,12 @@ namespace ProductsService
             .AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+            })
+             .AddFluentValidation(s =>
+             {
+                 s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                 s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+             });
 
             services.AddSwaggerGen(c =>
             {
