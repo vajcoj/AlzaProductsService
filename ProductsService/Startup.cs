@@ -10,8 +10,8 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using ProductsService.Conventions;
 using ProductsService.Data;
-using ProductsService.Service;
-using ProductsService.Service.Interface;
+using ProductsService.Services;
+using ProductsService.Services.Interface;
 
 namespace ProductsService
 {

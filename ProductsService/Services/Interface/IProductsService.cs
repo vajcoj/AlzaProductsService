@@ -3,7 +3,7 @@ using ProductsService.Helpers.Pagination;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ProductsService.Service.Interface
+namespace ProductsService.Services.Interface
 {
     public interface IProductsService
     {

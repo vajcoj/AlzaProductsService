@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductsService.Helpers;
 using ProductsService.Helpers.Pagination;
-using ProductsService.Service.Interface;
+using ProductsService.Services.Interface;
 using System.Threading.Tasks;
 
 namespace ProductsService.Controllers.V2
@@ -12,12 +11,10 @@ namespace ProductsService.Controllers.V2
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService _productsService;
-        private readonly IMapper _mapper;
 
-        public ProductsController(IProductsService service, IMapper mapper)
+        public ProductsController(IProductsService service)
         {
             _productsService = service;
-            _mapper = mapper;
         }
 
         [HttpGet]

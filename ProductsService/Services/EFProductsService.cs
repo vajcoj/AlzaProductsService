@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProductsService.Service.Interface;
+using ProductsService.Services.Interface;
 using ProductsService.Helpers.Pagination;
 using ProductsService.Models;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using ProductsService.Data;
 using AutoMapper;
 using ProductsService.DTOs;
 
-namespace ProductsService.Service
+namespace ProductsService.Services
 {
     public class EFProductsService : IProductsService
     {
