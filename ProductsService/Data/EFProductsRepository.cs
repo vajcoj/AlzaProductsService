@@ -3,7 +3,6 @@ using ProductsService.Data.Interface;
 using ProductsService.Helpers.Pagination;
 using ProductsService.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductsService.Data
@@ -36,6 +35,11 @@ namespace ProductsService.Data
         {
             var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
             return product;
+        }
+
+        public async Task<bool> SaveChanges()
+        {
+            return (await _context.SaveChangesAsync() >= 0);
         }
     }
 }

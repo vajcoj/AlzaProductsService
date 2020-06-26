@@ -9,6 +9,7 @@ namespace ProductsService.Helpers
         public MappingProfiles()
         {
             CreateMap<Product, ProductGetDTO>();
+            CreateMap<ProductPatchDTO, Product>().ReverseMap();
         }
     }
 }

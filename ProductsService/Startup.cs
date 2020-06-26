@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using ProductsService.Conventions;
 using ProductsService.Data;
 using ProductsService.Data.Interface;
@@ -26,6 +27,10 @@ namespace ProductsService
             services.AddControllers(options =>
             {
                 options.Conventions.Add(new GroupingByNamespaceConvention());
+            })
+            .AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
             services.AddSwaggerGen(c =>

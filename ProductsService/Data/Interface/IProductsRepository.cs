@@ -10,5 +10,6 @@ namespace ProductsService.Data.Interface
         public Task<Product> GetProduct(int id);
         public Task<IEnumerable<Product>> GetAllProducts();
         public Task<PagedList<Product>> GetAllProductsPaged(ProductParmeters productParmeters);
+        public Task<bool> SaveChanges();
     }
 }
