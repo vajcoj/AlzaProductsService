@@ -1,6 +1,6 @@
 ﻿namespace ProductsService.Helpers.Pagination
 {
-	public class ProductParmeters : QueryStringParameters
+	public class ProductParmeters : PaginationParameters
 	{
 
 	}

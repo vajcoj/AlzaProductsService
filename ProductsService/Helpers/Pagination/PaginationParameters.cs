@@ -1,6 +1,6 @@
 ﻿namespace ProductsService.Helpers.Pagination
 {
-	public abstract class QueryStringParameters
+	public class PaginationParameters
 	{
 		const int maxPageSize = 10;
 		public int PageNumber { get; set; } = 1;

@@ -6,6 +6,7 @@ using ProductsService.Helpers.Pagination;
 using ProductsService.Models;
 using ProductsService.Services.Interface;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductsService.Services
@@ -30,13 +31,9 @@ namespace ProductsService.Services
 
         public async Task<PagedList<ProductGetDTO>> GetPaged(ProductParmeters productParmeters)
         {
-            var products = await PagedList<Product>.ToPagedList(_context.Products,
-                    productParmeters.PageNumber,
-                    productParmeters.PageSize);
-
-            var productsToReturn = _mapper.Map<PagedList<ProductGetDTO>>(products);
-
-            return productsToReturn;
+            return await _context.Products
+                .Select(p => _mapper.Map<ProductGetDTO>(p))
+                .ToPagedList(productParmeters);
         }
 
         public async Task<ProductGetDTO> Get(int id)
@@ -45,7 +42,6 @@ namespace ProductsService.Services
             var productToReturn = _mapper.Map<ProductGetDTO>(product);
             return productToReturn;
         }
-
 
         public async Task<bool> Update(int id, ProductPatchDTO patch)
         {
