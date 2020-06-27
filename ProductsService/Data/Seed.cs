@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ProductsService.Data
 {
-    public class Seed
+    public static class Seed
     {
         public static void SeedProducts(ProductsContext context)
         {
