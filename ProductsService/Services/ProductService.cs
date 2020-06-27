@@ -24,21 +24,21 @@ namespace ProductsService.Services
 
         public async Task<IEnumerable<ProductGetDTO>> Get()
         {
-            var products = await _context.Products.ToListAsync();
+            var products = await _context.Products.AsNoTracking().ToListAsync();
             var productsToReturn = _mapper.Map<IEnumerable<ProductGetDTO>>(products);
             return productsToReturn;
         }
 
         public async Task<PagedList<ProductGetDTO>> GetPaged(ProductParmeters productParmeters)
         {
-            return await _context.Products
+            return await _context.Products.AsNoTracking()
                 .Select(p => _mapper.Map<ProductGetDTO>(p))
                 .ToPagedList(productParmeters);
         }
 
         public async Task<ProductGetDTO> Get(int id)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
             var productToReturn = _mapper.Map<ProductGetDTO>(product);
             return productToReturn;
         }
